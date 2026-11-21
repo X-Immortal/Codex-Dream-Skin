@@ -1782,6 +1782,14 @@ html[data-dream-skin="active"] [role="dialog"]:has([data-testid="image-preview-d
 }
 
 html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+  [data-ds-part="composer"] > [data-composer-body] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
   [data-ds-part="composer-toolbar"]:has([data-composer-input]) {
   border-top: 0 !important;
 }
