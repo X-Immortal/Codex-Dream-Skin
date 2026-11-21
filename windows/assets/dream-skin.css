@@ -1875,6 +1875,10 @@ html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [
     background: rgb(var(--ds-panel-rgb)) !important;
     border-color: var(--claude-ornament-line) !important;
   }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [data-slot="popover-content"][role="dialog"] > div.max-h-80.overflow-y-auto.rounded-lg.divide-y {
+    background-color: rgb(var(--ds-panel-rgb)) !important;
+  }
   /* Raise the resting text contrast while retaining Codex's shimmer sweep. */
   html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
     .thread-scroll-container :is([class*="cadencedShimmer-"].select-none, [class~="text-text/60"] > span.select-none.truncate) {
