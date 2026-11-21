@@ -17,7 +17,7 @@
     variable: `--ds-community-composer-${property}`,
   })).filter(({ variable }) => cssText.includes(`${variable}:`));
   const ROOT_ATTRS = [
-    "data-dream-skin", SHELL_ATTR, "data-dream-upload-alpha",
+    "data-dream-skin", SHELL_ATTR, "data-dream-theme-id", "data-dream-upload-alpha",
     "data-dream-art-wide", "data-dream-art-safe", "data-dream-task-mode",
     "data-dream-art-safe-area", "data-dream-art-task-mode", "data-dream-art-aspect",
     "data-dream-art-ready",
@@ -698,6 +698,7 @@
     const shell = resolvedShell();
     setAttribute(root, "data-dream-skin", "active");
     setAttribute(root, SHELL_ATTR, shell);
+    setAttribute(root, "data-dream-theme-id", THEME.id || "custom");
     setStyleProperty(root, "--dream-skin-art", `url("${artUrl}")`);
     applyTheme(root, shell);
     applyArtMetadata(root);

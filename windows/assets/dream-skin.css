@@ -1286,10 +1286,13 @@ html[data-dream-skin="active"] [data-markdown-text-style]
 
 /* Streaming reasoning is not yet inside the final assistant message. Give it
    one readable surface, then remove the nested decoration after finalization. */
+html[data-dream-skin="active"]:where(:not([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])) .thread-scroll-container
+  [data-response-annotation-conversation][data-response-annotation-target] {
+  margin-block: 4px 10px !important;
+}
 html[data-dream-skin="active"] .thread-scroll-container
   [data-response-annotation-conversation][data-response-annotation-target] {
   box-sizing: border-box;
-  margin-block: 4px 10px !important;
   padding: 14px 16px !important;
   border: 1px solid rgb(var(--ds-muted-rgb) / .18) !important;
   border-radius: 18px !important;
@@ -1303,10 +1306,14 @@ html[data-dream-skin="active"] .thread-scroll-container
   backdrop-filter: blur(20px) saturate(125%) brightness(104%) !important;
 }
 
-html[data-dream-skin="active"] .thread-scroll-container
+html[data-dream-skin="active"]:where(:not([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])) .thread-scroll-container
   [data-local-conversation-final-assistant]
   [data-response-annotation-conversation][data-response-annotation-target] {
   margin: 0 !important;
+}
+html[data-dream-skin="active"] .thread-scroll-container
+  [data-local-conversation-final-assistant]
+  [data-response-annotation-conversation][data-response-annotation-target] {
   border-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -1793,6 +1800,254 @@ html[data-dream-skin="active"] [role="dialog"] [data-testid="image-preview-dismi
 }
 html[data-dream-skin="active"] [role="dialog"]:has([data-testid="image-preview-dismiss-area"] table) [data-testid="image-preview-dismiss-area"] [class~="bg-inherit"] {
   background: transparent !important;
+}
+
+html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+  [data-ds-part="composer"] > [data-composer-body] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+  [data-ds-part="composer-toolbar"]:has([data-composer-input]) {
+  border-top: 0 !important;
+}
+
+/* Claude Atelier keeps its bookcase artwork outside the work column. A quiet
+   framed sidebar gives the native navigation its own surface. The flower is
+   decorative only and never receives input or accessibility focus. */
+@layer dreamskin-accessibility {
+  html[data-dream-skin="active"][data-dream-theme-id="claude-maid-atelier-dark"] aside.app-shell-left-panel {
+    background: linear-gradient(180deg, rgba(30, 20, 23, .96), rgba(43, 26, 25, .95)) !important;
+    border-right: 1px solid rgba(220, 163, 100, .76) !important;
+    box-shadow: 9px 0 28px rgba(8, 3, 3, .38) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+  html[data-dream-skin="active"][data-dream-theme-id="claude-maid-atelier"][data-dream-shell="light"] aside.app-shell-left-panel {
+    background: linear-gradient(180deg, rgba(255, 248, 235, .97), rgba(246, 229, 207, .96)) !important;
+    border-right: 1px solid rgba(156, 96, 53, .68) !important;
+    box-shadow: 9px 0 25px rgba(70, 39, 19, .15) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) aside.app-shell-left-panel::before {
+    content: "";
+    position: absolute;
+    inset: 3px 8px 6px 8px;
+    z-index: 2;
+    pointer-events: none;
+    border: 1px solid rgba(208, 151, 95, .38);
+    border-left: 0;
+    border-radius: 0 8px 8px 0;
+    background: var(--claude-flower) center top / 66px 18px no-repeat,
+      var(--claude-corner-left) left top / 24px 19px no-repeat,
+      var(--claude-corner-right) right top / 24px 19px no-repeat,
+      var(--claude-flower) center bottom / 54px 15px no-repeat;
+  }
+  html[data-dream-skin="active"][data-dream-theme-id="claude-maid-atelier-dark"] aside.app-shell-left-panel .sidebar-item[aria-current="page"] {
+    background: linear-gradient(90deg, rgba(126, 68, 42, .62), rgba(58, 34, 31, .92)) !important;
+    border: 1px solid rgba(226, 169, 108, .58) !important;
+    box-shadow: inset 2px 0 0 rgba(242, 193, 132, .82), 0 4px 12px rgba(7, 3, 3, .22) !important;
+  }
+  html[data-dream-skin="active"][data-dream-theme-id="claude-maid-atelier"][data-dream-shell="light"] aside.app-shell-left-panel .sidebar-item[aria-current="page"] {
+    background: linear-gradient(90deg, rgba(229, 179, 132, .64), rgba(250, 233, 210, .96)) !important;
+    border: 1px solid rgba(164, 102, 59, .48) !important;
+    box-shadow: inset 2px 0 0 rgba(170, 93, 51, .62), 0 4px 12px rgba(91, 51, 23, .10) !important;
+  }
+}
+
+/* The ornament follows stable visual regions. It does not create controls or
+   add copy, and the center of the reading column remains unpainted. */
+@layer dreamskin-accessibility {
+  html[data-dream-skin="active"][data-dream-theme-id="claude-maid-atelier-dark"] {
+    --claude-ornament-line: rgba(230, 176, 114, .53);
+    --claude-ornament-soft: rgba(230, 176, 114, .24);
+    --claude-ornament-fill: rgba(99, 53, 37, .68);
+    --claude-ornament-highlight: rgba(248, 210, 162, .22);
+  }
+  html[data-dream-skin="active"][data-dream-theme-id="claude-maid-atelier"][data-dream-shell="light"] {
+    --claude-ornament-line: rgba(159, 96, 53, .53);
+    --claude-ornament-soft: rgba(159, 96, 53, .23);
+    --claude-ornament-fill: rgba(232, 188, 143, .66);
+    --claude-ornament-highlight: rgba(255, 253, 243, .82);
+  }
+  /* These controls overlap the selected text, so use an opaque panel. */
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    :is(
+      [data-selected-text-annotation-editor] [data-browser-comment-editor-surface] > .pointer-events-auto.isolate,
+      [data-selected-text-annotation-editor] [data-browser-comment-editor-surface].bg-token-dropdown-background,
+      [role="presentation"].pointer-events-auto.w-fit.max-w-full.overflow-hidden.rounded-lg.bg-surface-elevated-secondary
+    ) {
+    background-color: rgb(var(--ds-panel-rgb)) !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [data-selected-text-annotation-editor] [data-browser-comment-editor-surface] > .pointer-events-auto.isolate > [aria-hidden="true"].outline-1 {
+    outline-color: var(--claude-ornament-line) !important;
+    mix-blend-mode: normal;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [role="presentation"].pointer-events-auto.w-fit.max-w-full.overflow-hidden.rounded-lg.bg-surface-elevated-secondary {
+    outline: 1px solid var(--claude-ornament-line);
+    outline-offset: -1px;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [data-slot="popover-content"][role="dialog"]:has(> div.overflow-y-auto > ol.divide-y > li > .select-text) {
+    background: rgb(var(--ds-panel-rgb)) !important;
+    border-color: var(--claude-ornament-line) !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [data-slot="popover-content"][role="dialog"] > div.max-h-80.overflow-y-auto.rounded-lg.divide-y {
+    background-color: rgb(var(--ds-panel-rgb)) !important;
+  }
+  /* Raise the resting text contrast while retaining Codex's shimmer sweep. */
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container :is([class*="cadencedShimmer-"].select-none, [class~="text-text/60"] > span.select-none.truncate) {
+    --loading-shimmer-base: var(--ds-text);
+    --loading-shimmer-highlight: color-mix(in srgb, var(--ds-text) 80%, var(--ds-accent));
+    color: var(--ds-text) !important;
+    text-shadow: 0 1px 3px rgb(var(--ds-bg-rgb) / .85);
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) {
+    --claude-flower: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4OCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDg4IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNjOTkxNWUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxIj4KICAgIDxwYXRoIGQ9Ik0xIDEyaDI2bTM0IDBoMjZNMTQgMTJjNC01IDctNSAxMCAwbTQwIDBjMy01IDYtNSAxMCAwIi8+CiAgICA8cGF0aCBkPSJNMjYgMTJjNC0xIDUtNCA3LTVtMjkgNWMtNC0xLTUtNC03LTUiLz4KICA8L2c+CiAgPGcgZmlsbD0iIzU4MzQyYiIgc3Ryb2tlPSIjZGZhYTcwIiBzdHJva2Utd2lkdGg9IjEiPgogICAgPGVsbGlwc2UgY3g9IjQ0IiBjeT0iNi41IiByeD0iMi40IiByeT0iNSIvPgogICAgPGVsbGlwc2UgY3g9IjQ0IiBjeT0iNi41IiByeD0iMi40IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoNDUgNDQgMTIpIi8+CiAgICA8ZWxsaXBzZSBjeD0iNDQiIGN5PSI2LjUiIHJ4PSIyLjQiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA0NCAxMikiLz4KICAgIDxlbGxpcHNlIGN4PSI0NCIgY3k9IjYuNSIgcng9IjIuNCIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDEzNSA0NCAxMikiLz4KICAgIDxlbGxpcHNlIGN4PSI0NCIgY3k9IjYuNSIgcng9IjIuNCIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDE4MCA0NCAxMikiLz4KICAgIDxlbGxpcHNlIGN4PSI0NCIgY3k9IjYuNSIgcng9IjIuNCIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDIyNSA0NCAxMikiLz4KICAgIDxlbGxpcHNlIGN4PSI0NCIgY3k9IjYuNSIgcng9IjIuNCIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDI3MCA0NCAxMikiLz4KICAgIDxlbGxpcHNlIGN4PSI0NCIgY3k9IjYuNSIgcng9IjIuNCIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDMxNSA0NCAxMikiLz4KICAgIDxjaXJjbGUgY3g9IjQ0IiBjeT0iMTIiIHI9IjIuOCIgZmlsbD0iI2YwYmY4MCIvPgogIDwvZz4KPC9zdmc+Cg==");
+    --claude-lace: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDY0IDEyIj4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNjOTkxNWUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0wIDEuNWg2NE0wIDMuNWM0IDAgNCA2IDggNnM0LTYgOC02IDQgNiA4IDYgNC02IDgtNiA0IDYgOCA2IDQtNiA4LTYgNCA2IDggNiA0LTYgOC02Ii8+CiAgICA8cGF0aCBkPSJNNCAzLjVsNCA0IDQtNG04IDAgNCA0IDQtNG04IDAgNCA0IDQtNG04IDAgNCA0IDQtNCIgc3Ryb2tlLW9wYWNpdHk9Ii42Ii8+CiAgPC9nPgogIDxnIGZpbGw9IiNlNGFkNzAiPjxjaXJjbGUgY3g9IjgiIGN5PSI5LjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjkuNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iOS41IiByPSIxIi8+PGNpcmNsZSBjeD0iNTYiIGN5PSI5LjUiIHI9IjEiLz48L2c+Cjwvc3ZnPgo=");
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) {
+    --claude-corner-left: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDMyIDI2Ij4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNjOTkxNWUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0xIDI1VjEzQzEgNSA1IDEgMTMgMWgxOCIvPgogICAgPHBhdGggZD0iTTUgMjFjMC05IDUtMTQgMTQtMTRtLTE0IDljNC0yIDctMiAxMCAwbS02LTljMyAzIDMgNiAxIDkiLz4KICAgIDxwYXRoIGQ9Ik0xNCA3YzMtMiA1LTEgNyAxLTIgMi01IDMtNyAxbS00IDdjMiAxIDMgMyAyIDYtMyAwLTUtMi01LTUiLz4KICAgIDxjaXJjbGUgY3g9IjUiIGN5PSI3IiByPSIxLjMiIGZpbGw9IiNlNGFkNzAiLz4KICA8L2c+Cjwvc3ZnPgo=");
+    --claude-corner-right: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDMyIDI2Ij4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMiAwKSBzY2FsZSgtMSAxKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzk5MTVlIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMSAyNVYxM0MxIDUgNSAxIDEzIDFoMTgiLz4KICAgIDxwYXRoIGQ9Ik01IDIxYzAtOSA1LTE0IDE0LTE0bS0xNCA5YzQtMiA3LTIgMTAgMG0tNi05YzMgMyAzIDYgMSA5Ii8+CiAgICA8cGF0aCBkPSJNMTQgN2MzLTIgNS0xIDcgMS0yIDItNSAzLTcgMW0tNCA3YzIgMSAzIDMgMiA2LTMgMC01LTItNS01Ii8+CiAgICA8Y2lyY2xlIGN4PSI1IiBjeT0iNyIgcj0iMS4zIiBmaWxsPSIjZTRhZDcwIi8+CiAgPC9nPgo8L3N2Zz4K");
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) [data-ds-part="sidebar"] [class*="group/sidebar-rail"] {
+    box-shadow: inset -1px 0 0 var(--claude-ornament-soft) !important;
+  }
+  /* The outer navigation list grows beneath the last shortcut. Its nested
+     shortcut groups share the same class, so decorate the outer list only. */
+  @media (min-height: 560px) {
+    html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+      [data-app-navigation-rail] > [class~="group/nav-list"]::after {
+      content: "";
+      flex: 1 1 0;
+      align-self: stretch;
+      min-height: 0;
+      pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 168' fill='none'%3E%3Cg stroke='%23c9915e' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath opacity='.63' d='M18 4v19m0 4c-2 19 8 26 3 43-3 11-11 16-10 31 1 12 9 19 8 32l-1 8v19'/%3E%3Cpath d='M20 58c-8-2-12-8-12-15 8 2 13 7 12 15Zm2 7c0-8 5-15 11-19-1 10-4 16-11 19ZM13 90C6 88 3 82 3 76c7 2 11 7 10 14Zm-1 17c2-9 7-13 13-14-2 7-6 12-13 14Zm6 20c-7-1-10-6-11-11 7 1 10 5 11 11Z' fill='%23c9915e' fill-opacity='.16'/%3E%3Cpath d='m18 19 3 5-3 5-3-5zm0 118 2.5 4-2.5 4-2.5-4z'/%3E%3C/g%3E%3Cg transform='translate(18 76)' fill='%236b4132' stroke='%23e1ae73' stroke-width='1'%3E%3Cpath d='M0-2c-5-6-3-10 0-10s6 5 1 10c5-7 10-6 10-2s-3 5-8 5c8 1 9 6 6 8s-7-1-9-6c0 7-4 10-7 7s0-8 5-10c-7 2-11-1-10-4s7-4 12 2Z'/%3E%3Ccircle r='2.3' fill='%23efc487'/%3E%3C/g%3E%3Cg fill='%23dca56f'%3E%3Ccircle cx='18' cy='3' r='1.4'/%3E%3Ccircle cx='18' cy='164' r='1.6'/%3E%3C/g%3E%3C/svg%3E") center / min(32px, 85%) min(168px, 100%) no-repeat,
+        linear-gradient(transparent, var(--claude-ornament-soft) 35%, transparent 35% 65%, var(--claude-ornament-soft) 65%, transparent) center / 1px 86% no-repeat;
+    }
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) [data-ds-part="composer"] {
+    background: rgb(var(--ds-panel-rgb)) !important;
+    border-radius: var(--composer-border-radius, 22px) !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [data-ds-part="composer"] > [data-composer-body] {
+    padding-top: 8px;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    [data-codex-composer-root][data-composer-placement="home"] [data-composer-utility-rail] {
+    background: rgb(var(--ds-panel-rgb)) !important;
+    border: 1px solid var(--ds-theme-color-line) !important;
+    border-bottom: 0 !important;
+    border-radius: var(--radius-2xl, 16px) var(--radius-2xl, 16px) 0 0 !important;
+  }
+  /* Running narration and tools use the same material as finished messages. */
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container :is([data-response-annotation-conversation][data-response-annotation-target], [data-local-conversation-item-target-ids]):not([data-local-conversation-final-assistant] *) {
+    background: rgb(var(--ds-panel-rgb) / var(--ds-upload-panel-alpha, .3)) !important;
+    border: 1px solid var(--ds-theme-color-line) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 7px 22px rgba(5, 2, 2, .38) !important;
+    backdrop-filter: blur(8px) !important;
+    color: var(--ds-theme-color-text) !important;
+
+    &[data-local-conversation-item-target-ids] {
+      background-image: var(--claude-corner-left), var(--claude-corner-right), var(--claude-flower) !important;
+      background-position: left 4px top 2px, right 4px top 2px, center bottom 0 !important;
+      background-size: 16px 12px, 16px 12px, 34px 9px !important;
+      background-repeat: no-repeat !important;
+    }
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container [data-markdown-text-style] [data-wide-markdown-block-kind="image"] {
+    max-width: 100%;
+  }
+  /* Paint into the existing message padding so even single-line bubbles
+     keep their native size and hit targets. */
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container [data-ds-part="message"]:not([data-local-conversation-final-assistant], [data-message-author-role="assistant"]) {
+    background-image: var(--claude-flower),
+      linear-gradient(90deg, transparent, var(--claude-ornament-line)),
+      linear-gradient(90deg, var(--claude-ornament-line), transparent) !important;
+    background-position: right 8px top 1px, right 46px top 6px, left 12px bottom 4px !important;
+    background-size: 39px 10px, min(18%, 36px) 1px, min(32%, 72px) 1px !important;
+    background-repeat: no-repeat !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container :is([data-thread-navigation-content="attachment"], [data-local-conversation-user-anchor]) button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"] {
+    background-color: rgb(var(--ds-panel-rgb) / .86) !important;
+    border-color: var(--claude-ornament-line) !important;
+    color: var(--ds-theme-color-text) !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container :is([data-thread-navigation-content="attachment"], [data-local-conversation-user-anchor]) button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"]:is(:hover, [aria-expanded="true"]) {
+    background-color: rgb(var(--ds-panel-rgb)) !important;
+  }
+  /* Older attachment-only layouts can still use the full-width message anchor. */
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container [data-local-conversation-user-anchor][data-ds-part="message"]:has(button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"]):not(:has([data-user-message-bubble])) {
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
+    .thread-scroll-container :is([data-local-conversation-final-assistant][data-ds-part="message"], [data-message-author-role="assistant"][data-ds-part="message"], [data-response-update-host][data-response-annotation-target]):not([data-local-conversation-final-assistant] *) {
+    background-image: var(--claude-corner-left), var(--claude-corner-right), var(--claude-flower),
+      linear-gradient(90deg, var(--claude-ornament-line), transparent 42%, transparent 58%, var(--claude-ornament-line)),
+      linear-gradient(var(--claude-ornament-line), var(--claude-ornament-soft) 55%, transparent) !important;
+    background-position: left 4px top 3px, right 4px top 3px, center bottom 2px, center top 4px, left 4px top 19px !important;
+    background-size: 23px 17px, 23px 17px, 49px 13px, calc(100% - 50px) 1px, 1px min(128px, 60%) !important;
+    background-repeat: no-repeat !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) [data-ds-part="sidebar"] button[class*="group/section-toggle"] {
+    background-image: linear-gradient(90deg, var(--claude-ornament-line), var(--claude-ornament-soft) 64%, transparent) !important;
+    background-position: left bottom !important;
+    background-size: 100% 1px !important;
+    background-repeat: no-repeat !important;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) [data-ds-part="header"]::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: auto 12px 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 12px !important;
+    background-image: var(--claude-flower), var(--claude-lace) !important;
+    background-position: center bottom, left bottom !important;
+    background-size: 46px 13px, 64px 12px !important;
+    background-repeat: no-repeat, repeat-x !important;
+    opacity: .43;
+    pointer-events: none;
+  }
+  html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) [data-ds-part="composer"]::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    z-index: 2;
+    border: 1px solid var(--claude-ornament-soft);
+    border-radius: calc(var(--composer-border-radius, 22px) - 4px);
+    background-image: var(--claude-flower), var(--claude-corner-left), var(--claude-corner-right), var(--claude-lace);
+    background-position: center top, left top, right top, left top;
+    background-size: 46px 13px, 24px 18px, 24px 18px, 64px 12px;
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat-x;
+    opacity: .68;
+    pointer-events: none;
+  }
+  @media (max-width: 1000px) {
+    html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) body,
+    html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"]) [data-ds-part="main"]::before {
+      background-image: none !important;
+    }
+  }
 }
 
 /* Windows 26.930 application-menu chrome already overlays the painted main.
