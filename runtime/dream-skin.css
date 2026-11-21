@@ -1960,13 +1960,13 @@ html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [
     background-repeat: no-repeat !important;
   }
   html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
-    .thread-scroll-container [data-local-conversation-user-anchor] button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"] {
+    .thread-scroll-container :is([data-thread-navigation-content="attachment"], [data-local-conversation-user-anchor]) button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"] {
     background-color: rgb(var(--ds-panel-rgb) / .86) !important;
     border-color: var(--claude-ornament-line) !important;
     color: var(--ds-theme-color-text) !important;
   }
   html[data-dream-skin="active"]:is([data-dream-theme-id="claude-maid-atelier"], [data-dream-theme-id="claude-maid-atelier-dark"])
-    .thread-scroll-container [data-local-conversation-user-anchor] button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"]:is(:hover, [aria-expanded="true"]) {
+    .thread-scroll-container :is([data-thread-navigation-content="attachment"], [data-local-conversation-user-anchor]) button[data-composer-attachment-pill][data-slot="popover-trigger"][class~="rounded-full"]:is(:hover, [aria-expanded="true"]) {
     background-color: rgb(var(--ds-panel-rgb)) !important;
   }
   /* Older attachment-only layouts can still use the full-width message anchor. */
