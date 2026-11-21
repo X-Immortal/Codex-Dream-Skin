@@ -685,6 +685,7 @@ export async function runRendererRuntimeTest(assetRoot) {
   const state = home.window.__CODEX_DREAM_SKIN_STATE__;
   assert.equal(home.attrs.get("data-dream-skin"), "active");
   assert.equal(home.attrs.get("data-dream-shell"), "dark");
+  assert.equal(home.attrs.get("data-dream-theme-id"), "fixture");
   assert.equal(home.attrs.get("data-ds-part"), "root");
   assert.equal(state.styleMode, "adopted");
   assert.equal(home.document.adoptedStyleSheets.length, 1);
@@ -1247,13 +1248,15 @@ export async function runRendererRuntimeTest(assetRoot) {
   }
 
   const explicit = makeFixture({ nativeAppearance: "light" });
-  const result = vm.runInNewContext(explicit.payloadFor({ appearance: "dark", quote: "TEST QUOTE" }), explicit.context);
+  const result = vm.runInNewContext(explicit.payloadFor({ id: "claude-maid-atelier-dark", appearance: "dark", quote: "TEST QUOTE" }), explicit.context);
   assert.equal(result.shell, "dark", "Explicit appearance must beat native appearance");
   assert.equal(explicit.attrs.get("data-dream-shell"), "dark");
+  assert.equal(explicit.attrs.get("data-dream-theme-id"), "claude-maid-atelier-dark");
   const oldState = explicit.window.__CODEX_DREAM_SKIN_STATE__;
   vm.runInNewContext(explicit.payloadFor({ appearance: "dark" }), explicit.context);
   assert.equal(oldState.cleanup(), false, "A stale cleanup must not remove the replacement");
   const replacement = explicit.window.__CODEX_DREAM_SKIN_STATE__;
+  assert.equal(explicit.attrs.get("data-dream-theme-id"), "fixture");
   assert.equal(explicit.document.adoptedStyleSheets.length, 1);
   assert.equal(replacement.cleanup(), true);
   assert.equal(explicit.document.adoptedStyleSheets.length, 0);
