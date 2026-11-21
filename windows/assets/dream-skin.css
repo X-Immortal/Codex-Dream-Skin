@@ -1861,3 +1861,18 @@ html[data-dream-skin="active"][data-codex-os="win32"][data-codex-window-chrome="
     backdrop-filter: blur(16px) saturate(108%) !important;
   }
 }
+
+/* A request-input card enlarges the absolute composer footer. The native
+   transcript keeps filling the whole scroll layout, so messages pass behind
+   the question card while scrolling. Reserve the measured footer height in
+   the viewport itself; the old in-flow spacer would reserve it twice. */
+html[data-dream-skin="active"][data-codex-os="win32"]
+  [data-request-input-activity-root]:has([data-codex-composer-request-navigation]) > .thread-scroll-container {
+  height: calc(100% - var(--thread-scroll-padding-bottom, 0px)) !important;
+  scroll-padding-bottom: 0 !important;
+}
+html[data-dream-skin="active"][data-codex-os="win32"]
+  [data-request-input-activity-root]:has([data-codex-composer-request-navigation]) > .thread-scroll-container
+  > div:first-child > .pointer-events-none.sticky.bottom-0 {
+  height: 0 !important;
+}
