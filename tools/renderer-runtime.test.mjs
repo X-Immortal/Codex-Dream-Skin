@@ -183,6 +183,20 @@ function makeFixture({
       new Map([["data-user-message-bubble", "true"]]),
       ['[class*="max-w-"][class*="rounded-2xl"][class*="text-start"]'],
     );
+    if (modernMessages) {
+      partFixtures.annotationOnly = makeDomNode(
+        "annotation-only", partFixtures.thread,
+        new Map([["data-local-conversation-user-anchor", "true"]]),
+      );
+      partFixtures.legacyUserAnchor = makeDomNode(
+        "legacy-user-anchor", partFixtures.thread,
+        new Map([["data-local-conversation-user-anchor", "true"]]),
+      );
+      const annotationTrigger =
+        'button[data-composer-attachment-pill][data-slot="popover-trigger"][aria-haspopup="dialog"]';
+      makeDomNode("annotation-only-trigger", partFixtures.annotationOnly, new Map(), [annotationTrigger]);
+      makeDomNode("annotation-with-text-trigger", partFixtures.userMessage, new Map(), [annotationTrigger]);
+    }
     partFixtures.assistantMessage = makeDomNode(
       "assistant-message", partFixtures.thread,
       new Map([["data-local-conversation-final-assistant", "true"]]),
@@ -207,6 +221,8 @@ function makeFixture({
     register(messageSelector, partFixtures.legacyMessage);
     if (modernMessages) {
       register(messageSelector, partFixtures.userMessage);
+      register(messageSelector, partFixtures.annotationOnly);
+      register(messageSelector, partFixtures.legacyUserAnchor);
       register(messageSelector, partFixtures.assistantMessage);
       register(messageSelector, partFixtures.followupBubble);
     }
@@ -872,7 +888,11 @@ export async function runRendererRuntimeTest(assetRoot) {
   assert.equal(modernMessages.partFixtures.userMessage.getAttribute("data-ds-part"), null,
     "Codex 26.818 full-width user anchors must not receive the public message part.");
   assert.equal(modernMessages.partFixtures.userMessageBubble.getAttribute("data-ds-part"), "message",
-    "Codex 26.818 user bubbles must expose the public message part at their adaptive boundary.");
+    "User messages with annotations must apply the message part to the text bubble.");
+  assert.equal(modernMessages.partFixtures.annotationOnly.getAttribute("data-ds-part"), null,
+    "Annotation-only rows must not receive the message part on the full-width wrapper.");
+  assert.equal(modernMessages.partFixtures.legacyUserAnchor.getAttribute("data-ds-part"), "message",
+    "Legacy user messages without an inner bubble must keep their existing fallback.");
   assert.equal(modernMessages.partFixtures.assistantMessage.getAttribute("data-ds-part"), "message",
     "Codex 26.727 assistant message containers must expose the public message part.");
   assert.equal(modernMessages.partFixtures.followupBubble.getAttribute("data-ds-part"), "message",
