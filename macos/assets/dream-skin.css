@@ -637,7 +637,6 @@ html[data-dream-skin="active"] main:is(.main-surface, [data-app-shell-main-surfa
 }
 
 html[data-dream-skin="active"] [role="main"]:has([data-testid="home-icon"]) {
-  --thread-content-max-width: min(1180px, calc(100cqw - 44px)) !important;
   overflow-x: hidden !important;
 }
 
@@ -1492,7 +1491,6 @@ html[data-dream-skin="active"] [data-local-conversation-final-assistant="true"][
 @media (max-width: 1120px) {
   html[data-dream-skin="active"]
     main:is(.main-surface, [data-app-shell-main-surface], [class*="_MainContentSurface_"]):has([role="main"])::after { content: none; }
-  html[data-dream-skin="active"] [role="main"]:has([data-testid="home-icon"]) { --thread-content-max-width: min(940px, calc(100cqw - 30px)) !important; }
   html[data-dream-skin="active"] [role="main"]:has([data-testid="home-icon"]) > div:first-child > div:first-child > div:first-child { width: calc(100% - 28px) !important; }
 }
 
